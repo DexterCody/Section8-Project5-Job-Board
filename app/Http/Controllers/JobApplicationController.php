@@ -13,9 +13,8 @@ class JobApplicationController extends Controller
      */
     public function create(Job $job)
     {
+        $this->authorize('apply', $job);
         return view('job_application.create', ['job' => $job]);
-        
-      
     }
 
     /**
@@ -23,6 +22,7 @@ class JobApplicationController extends Controller
      */
     public function store(Request $request, Job $job)
     {
+        $this->authorize('apply', $job);
         $job->jobApplications()->create([
             'user_id' => $request->user()->id,
             ...$request->validate([
